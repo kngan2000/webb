@@ -27,7 +27,7 @@
     "react-pdf": "^5.7.2",
     "react-redux": "^7.2.6",
     "react-router-dom": "^5.3.0",
-    "react-scripts": "4.0.3",
+    "react-scripts": "^5.0.1",
     "react-toastify": "^8.1.0",
     "redux": "^4.1.2",
     "redux-devtools-extension": "^2.13.9",
@@ -38,6 +38,7 @@
   },
   "scripts": {
     "start": "set PORT=4000 && react-scripts start",
+    "start:ssl": "set PORT=4000 && react-scripts start --openssl-legacy-provider start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

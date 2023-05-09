@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import Header from "../components/Header";
 import ProfileTabs from "../components/profileComponents/ProfileTabs";
-import { getUserDetails } from "../Redux/Actions/userActions";
+import {getUserDetails} from "../Redux/Actions/userActions";
 import Orders from "./../components/profileComponents/Orders";
 import moment from "moment";
-import { listMyOrders } from "../Redux/Actions/OrderActions";
+import {listMyOrders} from "../Redux/Actions/OrderActions";
 
 const ProfileScreen = () => {
   window.scrollTo(0, 0);
@@ -13,9 +13,9 @@ const ProfileScreen = () => {
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  const {userInfo} = userLogin;
   const orderListMy = useSelector((state) => state.orderListMy);
-  const { loading, error, orders } = orderListMy;
+  const {loading, error, orders} = orderListMy;
 
   useEffect(() => {
     dispatch(listMyOrders());
@@ -24,7 +24,7 @@ const ProfileScreen = () => {
 
   return (
     <>
-      <Header />
+      <Header/>
       <div className="container mt-lg-5 mt-3">
         <div className="row align-items-start">
           <div className="col-lg-4 p-0 shadow ">
@@ -32,7 +32,7 @@ const ProfileScreen = () => {
               <div className="author-card-cover"></div>
               <div className="author-card-profile row">
                 <div className="author-card-avatar col-md-5">
-                  <img src="./images/logo-mb.png" alt="userprofileimage" />
+                  <img src={userInfo.avatar ??"./images/logo-mb.png"} alt="userprofileimage"/>
                 </div>
                 <div className="author-card-details col-md-7">
                   <h5 className="author-card-name mb-2">
@@ -95,7 +95,7 @@ const ProfileScreen = () => {
               role="tabpanel"
               aria-labelledby="v-pills-home-tab"
             >
-              <ProfileTabs />
+              <ProfileTabs/>
             </div>
             <div
               class="tab-pane fade"
@@ -103,7 +103,7 @@ const ProfileScreen = () => {
               role="tabpanel"
               aria-labelledby="v-pills-profile-tab"
             >
-              <Orders orders={orders} loading={loading} error={error} />
+              <Orders orders={orders} loading={loading} error={error}/>
             </div>
           </div>
         </div>

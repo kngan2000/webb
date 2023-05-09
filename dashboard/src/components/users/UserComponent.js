@@ -15,9 +15,9 @@ const UserComponent = () => {
     dispatch(listUser());
   }, [dispatch]);
 
-  const deletehandler = (email) => {
+  const deletehandler = (id) => {
     if (window.confirm("Are you sure??")) {
-      dispatch(deleteUser(email));
+      dispatch(deleteUser(id));
     }
   };
   return (

@@ -202,6 +202,10 @@ const OrderScreen = ({ match }) => {
                           <h4>Quantity</h4>
                           <h6>{item.qty}</h6>
                         </div>
+                        <div className="mt-3 mt-md-0 col-md-2 col-6  d-flex align-items-center flex-column justify-content-center ">
+                          <h4>Size</h4>
+                          <h6>{item.size}</h6>
+                        </div>
                         <div className="mt-3 mt-md-0 col-md-2 col-6 align-items-end  d-flex flex-column justify-content-center ">
                           <h4>Total Order</h4>
                           <h6>

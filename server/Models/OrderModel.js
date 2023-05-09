@@ -9,11 +9,12 @@ const orderSchema = mongoose.Schema(
     },
     orderItems: [
       {
-        name: { type: String, required: true },
-        qty: { type: Number, required: true },
-        image: { type: String, required: true },
-        price: { type: Number, required: true },
-        loanPrice: { type: Number, required: true },
+        name: {type: String, required: true},
+        qty: {type: Number, required: true},
+        image: {type: String, required: true},
+        price: {type: Number, required: true},
+        loanPrice: {type: Number, required: true},
+        size: {type: String, required: true},
         product: {
           type: mongoose.Schema.Types.ObjectId,
           required: true,
@@ -22,10 +23,10 @@ const orderSchema = mongoose.Schema(
       },
     ],
     shippingAddress: {
-      address: { type: String, required: true },
-      city: { type: String, required: true },
-      postalCode: { type: String, required: true },
-      country: { type: String, required: true },
+      address: {type: String, required: true},
+      city: {type: String, required: true},
+      postalCode: {type: String, required: true},
+      country: {type: String, required: true},
     },
     paymentMethod: {
       type: String,
@@ -33,10 +34,10 @@ const orderSchema = mongoose.Schema(
       default: "Paypal",
     },
     paymentResult: {
-      id: { type: String },
-      status: { type: String },
-      update_time: { type: String },
-      email_address: { type: String },
+      id: {type: String},
+      status: {type: String},
+      update_time: {type: String},
+      email_address: {type: String},
     },
     taxPrice: {
       type: Number,

@@ -5,6 +5,7 @@ import { createOrder } from "../Redux/Actions/OrderActions";
 import { ORDER_CREATE_RESET } from "../Redux/Constants/OrderConstants";
 import Header from "./../components/Header";
 import Message from "./../components/LoadingError/Error";
+import {PaymentMethod} from "./PaymentScreen";
 
 const PlaceOrderScreen = ({ history }) => {
   window.scrollTo(0, 0);
@@ -62,12 +63,12 @@ const PlaceOrderScreen = ({ history }) => {
         createOrder({
           orderItems: cart.cartItems,
           shippingAddress: cart.shippingAddress,
-          paymentMethod: pay === "Credit" ? "Credit" : "Paypal",
+          paymentMethod: pay === PaymentMethod.Credit ? "Credit" : "Paypal",
           itemsPrice: cart.itemsLoanPrice,
           shippingPrice: cart.shippingLoanPrice,
           taxPrice: cart.taxLoanPrice,
           totalPrice: cart.totalLoanPrice,
-          isPaid: pay == "PayPal" ? false : true,
+          isPaid: pay == PaymentMethod.PayPal ? false : true,
           typePay: "loan",
         })
       );
@@ -76,12 +77,12 @@ const PlaceOrderScreen = ({ history }) => {
         createOrder({
           orderItems: cart.cartItems,
           shippingAddress: cart.shippingAddress,
-          paymentMethod: pay === "Credit" ? "Credit" : "Paypal",
+          paymentMethod: pay === PaymentMethod.Credit ? "Credit" : "Paypal",
           itemsPrice: cart.itemsPrice,
           shippingPrice: cart.shippingPrice,
           taxPrice: cart.taxPrice,
           totalPrice: cart.totalPrice,
-          isPaid: pay == "PayPal" ? false : true,
+          isPaid: pay == PaymentMethod.PayPal ? false : true,
           typePay: "buy",
         })
       );
@@ -144,7 +145,7 @@ const PlaceOrderScreen = ({ history }) => {
                 <p>Shipping: {cart.shippingAddress.country}</p>
                 <p>
                 Payments Methods:{" "}
-                  {cart.paymentMethod === "Credit Card"
+                  {cart.paymentMethod === PaymentMethod.Credit
                     ? "Payment on delivery"
                     : "PayPal"}
                 </p>
@@ -194,7 +195,11 @@ const PlaceOrderScreen = ({ history }) => {
                     <div className="mt-3 mt-md-0 col-md-2 col-6  d-flex align-items-center flex-column justify-content-center ">
                       <h4>SQuantity</h4>
                       <h6>{item.qty}</h6>
+                      <br/>
+                      <h4>Size</h4>
+                      <h6>{item.size}</h6>
                     </div>
+
                     <div className="mt-3 mt-md-0 col-md-2 col-6 align-items-end  d-flex flex-column justify-content-center ">
                       <h4>Total</h4>
                       <h6>

@@ -136,20 +136,10 @@ const EditProductMain = (props) => {
       <Toast />
       <section className="content-main" style={{ maxWidth: "1200px" }}>
         <form onSubmit={submitHandler}>
-          <div className="content-header">
-            <Link to="/products" className="btn btn-danger text-white">
-             Go to product home page
-            </Link>
-            <h2 className="content-title">UPDATE PRODUCT</h2>
-            <div>
-              <button type="submit" className="btn btn-primary">
-                UPDATE 
-              </button>
-            </div>
-          </div>
 
-          <div className="row mb-4">
-            <div className="col-xl-8 col-lg-8">
+
+          <div className="row mb-4" style={{margin:"0 80px"}}>
+            <div className="col-xl-12 col-lg-12">
               <div className="card mb-4 shadow-sm">
                 <div className="card-body">
                   {errorUpdate && (
@@ -163,14 +153,14 @@ const EditProductMain = (props) => {
                   ) : (
                     <>
                       <div className="mb-4">
-                        <label htmlFor="product_title" className="form-label">
+                        <label htmlFor="product_id" className="form-label">
                           Product ID
                         </label>
                         <input
                           type="text"
                           placeholder="Type here"
                           className="form-control"
-                          id="product_title"
+                          id="product_id"
                           required
                           value={ma}
                           onChange={(e) => setMa(e.target.value)}
@@ -262,6 +252,18 @@ const EditProductMain = (props) => {
                   )}
                 </div>
               </div>
+            </div>
+          </div>
+
+          <div className="content-header">
+            <Link to="/products" className="btn btn-danger text-white">
+              Go to product home page
+            </Link>
+            {/*<h2 className="content-title">UPDATE PRODUCT</h2>*/}
+            <div>
+              <button type="submit" className="btn btn-primary">
+                UPDATE
+              </button>
             </div>
           </div>
         </form>

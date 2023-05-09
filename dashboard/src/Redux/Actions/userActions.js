@@ -15,8 +15,8 @@ import {
   USER_DELETE_FAIL
 } from "../Constants/UserContants";
 import axios from "axios";
-import { toast } from "react-toastify";
-import { URL } from "../Url";
+import {toast} from "react-toastify";
+import {URL} from "../Url";
 
 // LOGIN
 export const login = (email, password) => async (dispatch) => {
@@ -27,7 +27,7 @@ export const login = (email, password) => async (dispatch) => {
     autoClose: 2000,
   };
   try {
-    dispatch({ type: USER_LOGIN_REQUEST });
+    dispatch({type: USER_LOGIN_REQUEST});
 
     const config = {
       headers: {
@@ -35,9 +35,9 @@ export const login = (email, password) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.post(
+    const {data} = await axios.post(
       `${URL}/api/users/login`,
-      { email, password },
+      {email, password},
       config
     );
 
@@ -47,7 +47,7 @@ export const login = (email, password) => async (dispatch) => {
         type: USER_LOGIN_FAIL,
       });
     } else {
-      dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
+      dispatch({type: USER_LOGIN_SUCCESS, payload: data});
     }
 
     localStorage.setItem("userInfo", JSON.stringify(data));
@@ -69,17 +69,17 @@ export const login = (email, password) => async (dispatch) => {
 // LOGOUT
 export const logout = () => (dispatch) => {
   localStorage.removeItem("userInfo");
-  dispatch({ type: USER_LOGOUT });
-  dispatch({ type: USER_LIST_RESET });
+  dispatch({type: USER_LOGOUT});
+  dispatch({type: USER_LIST_RESET});
 };
 
 // ALL USER
 export const listUser = () => async (dispatch, getState) => {
   try {
-    dispatch({ type: USER_LIST_REQUEST });
+    dispatch({type: USER_LIST_REQUEST});
 
     const {
-      userLogin: { userInfo },
+      userLogin: {userInfo},
     } = getState();
 
     const config = {
@@ -88,9 +88,9 @@ export const listUser = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`${URL}/api/users`, config);
+    const {data} = await axios.get(`${URL}/api/users`, config);
 
-    dispatch({ type: USER_LIST_SUCCESS, payload: data });
+    dispatch({type: USER_LIST_SUCCESS, payload: data});
   } catch (error) {
     const message =
       error.response && error.response.data.message
@@ -109,50 +109,50 @@ export const listUser = () => async (dispatch, getState) => {
 // CREATE USER
 export const createUser =
   (name, email, password) =>
-  async (dispatch, getState) => {
-    try {
-      dispatch({ type: USER_CREATE_REQUEST });
+    async (dispatch, getState) => {
+      try {
+        dispatch({type: USER_CREATE_REQUEST});
 
-      const {
-        userLogin: { userInfo },
-      } = getState();
+        const {
+          userLogin: {userInfo},
+        } = getState();
 
-      const config = {
-        headers: {
-          Authorization: `Bearer ${userInfo.token}`,
-        },
-      };
+        const config = {
+          headers: {
+            Authorization: `Bearer ${userInfo.token}`,
+          },
+        };
 
-      const { data } = await axios.post(
-        `${URL}/api/users/`,
-        { name, email, password},
-        config
-      );
+        const {data} = await axios.post(
+          `${URL}/api/users/`,
+          {name, email, password},
+          config
+        );
 
-      dispatch({ type: USER_CREATE_SUCCESS, payload: data });
-    } catch (error) {
-      const message =
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message;
-      if (message === "Not authorized, token failed") {
-        dispatch(logout());
+        dispatch({type: USER_CREATE_SUCCESS, payload: data});
+      } catch (error) {
+        const message =
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message;
+        if (message === "Not authorized, token failed") {
+          dispatch(logout());
+        }
+        dispatch({
+          type: USER_CREATE_FAIL,
+          payload: message,
+        });
       }
-      dispatch({
-        type: USER_CREATE_FAIL,
-        payload: message,
-      });
-    }
 
-};
+    };
 
 // DELETE PRODUCT
-export const deleteUser = (email) => async (dispatch, getState) => {
+export const deleteUser = (id) => async (dispatch, getState) => {
   try {
-    dispatch({ type: USER_DELETE_REQUEST });
+    dispatch({type: USER_DELETE_REQUEST});
 
     const {
-      userLogin: { userInfo },
+      userLogin: {userInfo},
     } = getState();
 
     const config = {
@@ -161,9 +161,9 @@ export const deleteUser = (email) => async (dispatch, getState) => {
       },
     };
 
-    await axios.delete(`${URL}/api/users/${email}`, config);
+    await axios.delete(`${URL}/api/users/delete_user?id=${id}`, config);
 
-    dispatch({ type: USER_DELETE_SUCCESS });
+    dispatch({type: USER_DELETE_SUCCESS});
   } catch (error) {
     const message =
       error.response && error.response.data.message

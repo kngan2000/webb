@@ -7,7 +7,7 @@ import {
 } from "../Constants/CartConstants";
 
 // ADD TO CART
-export const addToCart = (id, qty, typePay) => async (dispatch, getState) => {
+export const addToCart = (id, qty, size, typePay) => async (dispatch, getState) => {
   const { data } = await axios.get(`/api/products/${id}`);
 
   dispatch({
@@ -21,6 +21,7 @@ export const addToCart = (id, qty, typePay) => async (dispatch, getState) => {
       loanPrice: data.loanPrice,
       typePay: typePay,
       qty,
+      size,
     },
   });
   localStorage.removeItem("cartItems");

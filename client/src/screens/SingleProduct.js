@@ -1,31 +1,41 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import Header from "./../components/Header";
 import Rating from "../components/homeComponents/Rating";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import Message from "./../components/LoadingError/Error";
-import { useDispatch, useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {
   createProductReview,
   listProductDetails,
 } from "../Redux/Actions/ProductActions";
-import { addToCart, removefromcart } from "./../Redux/Actions/cartActions";
+import {addToCart, removefromcart} from "./../Redux/Actions/cartActions";
 import Loading from "../components/LoadingError/Loading";
-import { PRODUCT_CREATE_REVIEW_RESET } from "../Redux/Constants/ProductConstants";
+import {PRODUCT_CREATE_REVIEW_RESET} from "../Redux/Constants/ProductConstants";
 import moment from "moment";
-import { toast } from "react-toastify";
+import {toast} from "react-toastify";
 
-const SingleProduct = ({ history, match }) => {
+
+export const productSizes = [
+  "S",
+  "M",
+  "L",
+  "XL",
+  "XXL",
+]
+
+const SingleProduct = ({history, match}) => {
   const [qty, setQty] = useState(1);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
-  const [listStore, setListStore] = useState(JSON.parse(localStorage.getItem('favorite'))||[]);
+  const [size, setSize] = useState(productSizes[0]);
+  const [listStore, setListStore] = useState(JSON.parse(localStorage.getItem('favorite')) || []);
   const productId = match.params.id;
   const dispatch = useDispatch();
 
   const productDetails = useSelector((state) => state.productDetails);
-  const { loading, error, product } = productDetails;
+  const {loading, error, product} = productDetails;
   const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  const {userInfo} = userLogin;
   const productReviewCreate = useSelector((state) => state.productReviewCreate);
   const {
     loading: loadingCreateReview,
@@ -38,14 +48,14 @@ const SingleProduct = ({ history, match }) => {
       alert("Review Submitted");
       setRating(0);
       setComment("");
-      dispatch({ type: PRODUCT_CREATE_REVIEW_RESET });
+      dispatch({type: PRODUCT_CREATE_REVIEW_RESET});
     }
     dispatch(listProductDetails(productId));
   }, [dispatch, productId, successCreateReview]);
 
   const AddToCartHandle = (e) => {
     e.preventDefault();
-    history.push(`/cart/${productId}?qty=${qty}`);
+    history.push(`/cart/${productId}?qty=${qty}&size=${size}`);
   };
 
   const AddToFavoriteHandle = () => {
@@ -58,7 +68,7 @@ const SingleProduct = ({ history, match }) => {
       quantity: 1
     }
 
-    if (store) {      
+    if (store) {
       const listStore = JSON.parse(localStorage.getItem('favorite'));
       const a = [...listStore];
       const exits = a.find(item => item.id == product._id);
@@ -66,12 +76,12 @@ const SingleProduct = ({ history, match }) => {
         toast.error('Favorite list already exists!')
       } else {
         a.push(obj)
-        localStorage.setItem('favorite',JSON.stringify(a));
+        localStorage.setItem('favorite', JSON.stringify(a));
       }
-    }else{
+    } else {
       const a = [];
       a.push(obj)
-      localStorage.setItem('favorite',JSON.stringify(a));
+      localStorage.setItem('favorite', JSON.stringify(a));
     }
     history.push(`/favorite`);
   }
@@ -94,10 +104,10 @@ const SingleProduct = ({ history, match }) => {
   };
   return (
     <>
-      <Header />
+      <Header/>
       <div className="container single-product">
         {loading ? (
-          <Loading />
+          <Loading/>
         ) : error ? (
           <Message variant="alert-danger">{error}</Message>
         ) : (
@@ -105,13 +115,14 @@ const SingleProduct = ({ history, match }) => {
             <div className="row">
               <div className="col-md-6">
                 <div className="single-image">
-                  <img src={product.image} alt={product.name} />
-                  <i className={`fas fa-heart heart ${listStore.find(item => item.id == product._id) ? 'bg-red': ''}`} onClick={AddToFavoriteHandle}></i>
+                  <img src={product.image} alt={product.name}/>
+                  <i className={`fas fa-heart heart ${listStore.find(item => item.id == product._id) ? 'bg-red' : ''}`}
+                     onClick={AddToFavoriteHandle}></i>
                 </div>
               </div>
               <div className="col-md-6">
                 <div className="product-dtl">
-                      <div className="product-info">                      
+                  <div className="product-info">
                     <div className="product-name">{product.name}</div>
                   </div>
                   <p>{product.description}</p>
@@ -145,6 +156,21 @@ const SingleProduct = ({ history, match }) => {
                     {product.countInStock > 0 ? (
                       <>
                         <div className="flex-box d-flex justify-content-between align-items-center">
+                          <h6>Size</h6>
+                          <select
+                            value={size}
+                            onChange={(e) => setSize(e.target.value)}
+                          >
+                            {productSizes.map(
+                              (x) => (
+                                <option key={x} value={x}>
+                                  {x}
+                                </option>
+                              )
+                            )}
+                          </select>
+                        </div>
+                        <div className="flex-box d-flex justify-content-between align-items-center">
                           <h6>Quantity</h6>
                           <select
                             value={qty}
@@ -164,7 +190,7 @@ const SingleProduct = ({ history, match }) => {
                           className="round-black-btn"
                         >
                           ADD-TO-CART
-                            </button>                                                      
+                        </button>
                       </>
                     ) : null}
                   </div>
@@ -187,7 +213,7 @@ const SingleProduct = ({ history, match }) => {
                     className="mb-5 mb-md-3 bg-light p-3 shadow-sm rounded"
                   >
                     <strong>{review.name}</strong>
-                    <Rating value={review.rating} />
+                    <Rating value={review.rating}/>
                     <span>{moment(review.createdAt).calendar()}</span>
                     <div className="alert alert-info mt-3">
                       {review.comment}
@@ -198,7 +224,7 @@ const SingleProduct = ({ history, match }) => {
               <div className="col-md-6">
                 <h6>Customer Reviews</h6>
                 <div className="my-4">
-                  {loadingCreateReview && <Loading />}
+                  {loadingCreateReview && <Loading/>}
                   {errorCreateReview && (
                     <Message variant="alert-danger">
                       {errorCreateReview}

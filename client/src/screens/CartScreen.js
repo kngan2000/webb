@@ -1,25 +1,36 @@
-import React, { useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import Header from "./../components/Header";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { addToCart, removefromcart } from "./../Redux/Actions/cartActions";
+import {Link, useLocation, useParams} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {addToCart, removefromcart} from "./../Redux/Actions/cartActions";
+import {productSizes} from "./SingleProduct";
+import queryString from 'query-string';
 
-const CartScreen = ({ match, location, history }) => {
+
+const CartScreen = ({match, location, history}) => {
   window.scrollTo(0, 0);
   const dispatch = useDispatch();
   const productId = match.params.id;
-  const qty = location.search ? Number(location.search.split("=")[1]) : 1;
+  // const qty = location.search ? Number(location.search.split("=")[1]) : 1;
+
+  //Sử dụng queryString để parse search thành object
+  //Để lấy các field thay vì split string
+  const {search} = useLocation();
+  const query = queryString.parse(search);
+  const qty = query.qty;
+  const size = query.size;
+
 
   const cart = useSelector((state) => state.cart);
-  const { cartItems } = cart;
+  const {cartItems} = cart;
 
   const total = cartItems.reduce((a, i) => a + i.qty * i.price, 0);
 
   useEffect(() => {
     if (productId) {
-      dispatch(addToCart(productId, qty, "buy"));
+      dispatch(addToCart(productId, qty, size, "buy"));
     }
-  }, [dispatch, productId, qty]);
+  }, [dispatch, productId, qty, size]);
 
   const checkOutHandler = () => {
     history.push("/login?redirect=shipping");
@@ -38,7 +49,7 @@ const CartScreen = ({ match, location, history }) => {
 
   return (
     <>
-      <Header />
+      <Header/>
       {/* Cart */}
       <div className="container">
         {cartItems.length === 0 ? (
@@ -72,19 +83,20 @@ const CartScreen = ({ match, location, history }) => {
                   <i className="fas fa-times"></i>
                 </div>
                 <div className="cart-image col-md-3">
-                  <img src={item.image} alt={item.name} />
+                  <img src={item.image} alt={item.name}/>
                 </div>
                 <div className="cart-text col-md-5 d-flex align-items-center">
                   <Link to={`/products/${item.product}`}>
                     <h4>{item.name}</h4>
                   </Link>
                 </div>
-                <div className="cart-qty col-md-2 col-sm-5 mt-md-5 mt-3 mt-md-0 d-flex flex-column justify-content-center">
+                <div
+                  className="cart-qty col-md-2 col-sm-5 mt-md-5 mt-3 mt-md-0 d-flex flex-column justify-content-center">
                   <h6>Quantity</h6>
                   <select
                     value={item.qty}
                     onChange={(e) =>
-                      dispatch(addToCart(item.product, Number(e.target.value)))
+                      dispatch(addToCart(item.product, Number(e.target.value), size))
                     }
                   >
                     {[...Array(item.countInStock).keys()].map((x) => (
@@ -94,9 +106,27 @@ const CartScreen = ({ match, location, history }) => {
                     ))}
                   </select>
                 </div>
-                <div className="cart-price mt-3 mt-md-0 col-md-2 align-items-sm-end align-items-start  d-flex flex-column justify-content-center col-sm-7">
+                <div
+                  className="cart-qty col-md-2 col-sm-5 mt-md-5 mt-3 mt-md-0 d-flex flex-column justify-content-center">
+                  <h6>Size</h6>
+                  <select
+                    value={item.size}
+                    onChange={(e) =>
+                      // setSize(e.target.value)
+                      dispatch(addToCart(item.product, qty, e.target.value))
+                    }
+                  >
+                    {productSizes.map((x) => (
+                      <option key={x} value={x}>
+                        {x}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div
+                  className="cart-price mt-3 mt-md-0 col-md-2 align-items-sm-end align-items-start  d-flex flex-column justify-content-center col-sm-7">
                   <h6>Unit Price</h6>
-                  <h4 style={{ fontSize: "16px" }}>
+                  <h4 style={{fontSize: "16px"}}>
                     {showPrice(item.price)}
                   </h4>
                 </div>
@@ -108,7 +138,7 @@ const CartScreen = ({ match, location, history }) => {
               <span className="sub">Total Purchase:</span>
               <span className="total-price">{showPrice(total)}</span>
             </div>
-            <hr />
+            <hr/>
             <div class="cart-buttons d-flex align-items-center row">
               <Link to="/" className="col-md-6 ">
                 <button class="">Continue To Shopping</button>
