@@ -54,11 +54,11 @@ const Login = ({history}) => {
     return errors;
   };
 
-  useEffect(() => {
-    if (userInfo) {
-      history.push("/");
-    }
-  }, [userInfo, history]);
+  // useEffect(() => {
+  //   if (userInfo) {
+  //     history.push("/");
+  //   }
+  // }, [userInfo, history]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -69,7 +69,7 @@ const Login = ({history}) => {
       // submit form
       setErrors({});
 
-      dispatch(login( email, password));
+      dispatch(login( email, password)).then(() => history.push('/'));
     } else {
       setErrors(errors);
     }

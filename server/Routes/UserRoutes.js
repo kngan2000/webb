@@ -4,6 +4,8 @@ import {protect, admin} from "../Middleware/AuthMiddleware.js";
 import generateToken from "../utils/generateToken.js";
 import User from "./../Models/UserModel.js";
 import nodemailer from "nodemailer";
+import fetch from "node-fetch";
+
 
 const userRouter = express.Router();
 

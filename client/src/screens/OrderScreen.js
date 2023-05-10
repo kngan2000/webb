@@ -9,6 +9,7 @@ import Message from "./../components/LoadingError/Error";
 import moment from "moment";
 import axios from "axios";
 import { ORDER_PAY_RESET } from "../Redux/Constants/OrderConstants";
+import {PaymentMethod} from "../screens/PaymentScreen";
 
 const OrderScreen = ({ match }) => {
   window.scrollTo(0, 0);
@@ -201,11 +202,14 @@ const OrderScreen = ({ match }) => {
                         <div className="mt-3 mt-md-0 col-md-2 col-6  d-flex align-items-center flex-column justify-content-center ">
                           <h4>Quantity</h4>
                           <h6>{item.qty}</h6>
-                        </div>
-                        <div className="mt-3 mt-md-0 col-md-2 col-6  d-flex align-items-center flex-column justify-content-center ">
+                          <br/>
                           <h4>Size</h4>
                           <h6>{item.size}</h6>
                         </div>
+                        {/* <div className="mt-3 mt-md-0 col-md-2 col-6  d-flex align-items-center flex-column justify-content-center ">
+                          <h4>Size</h4>
+                          <h6>{item.size}</h6>
+                        </div> */}
                         <div className="mt-3 mt-md-0 col-md-2 col-6 align-items-end  d-flex flex-column justify-content-center ">
                           <h4>Total Order</h4>
                           <h6>
@@ -253,7 +257,7 @@ const OrderScreen = ({ match }) => {
                     </tr>
                   </tbody>
                 </table>
-                {!order.isPaid && order.paymentMethod === 'Paypal' && (
+                {!order.isPaid && order.paymentMethod === "Paypal" && (
                   <div className="col-12">
                     {loadingPay && <Loading />}
                     {!sdkReady ? (

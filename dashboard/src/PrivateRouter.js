@@ -5,6 +5,7 @@ import { Redirect, Route } from "react-router-dom";
 function PrivateRouter({ component: Component, ...rest }) {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+  
   return (
     <Route
       {...rest}

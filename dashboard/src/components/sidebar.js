@@ -8,8 +8,8 @@ const Sidebar = () => {
         <div className="aside-top">
           <Link to="/" className="brand-wrap">
             <img
-              src="https://www.coolmate.me/images/logo-coolmate-birthday.svg"
-              style={{ height: "46" }}
+              src="/images/Kieungann.png"
+              style={{ height: "100" }}
               className="logo"
               alt="Ecommerce Dashboard"
             />
