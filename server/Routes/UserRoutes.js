@@ -6,7 +6,6 @@ import User from "./../Models/UserModel.js";
 import nodemailer from "nodemailer";
 import fetch from "node-fetch";
 
-
 const userRouter = express.Router();
 
 // LOGIN

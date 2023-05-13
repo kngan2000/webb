@@ -99,10 +99,10 @@ categoryRouter.delete(
     const category = await Category.findById(req.params.id);
     if (category) {
       await category.remove();
-      res.json({ message: "Category deleted" });
+      res.json({ message: "Category deleted!" });
     } else {
       res.status(404);
-      throw new Error("Category not Found");
+      throw new Error("Category not found!");
     }
   })
 );
@@ -131,7 +131,7 @@ categoryRouter.put(
       }
     } else {
       res.status(404);
-      throw new Error("Category not found");
+      throw new Error("Category not found!");
     }
   })
 );
