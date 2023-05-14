@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../Redux/Actions/userActions";
-import { listSearch } from "..//Redux/Actions/ProductActions";
+import React, {useCallback, useEffect, useState} from "react";
+import {Link, useHistory} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {logout} from "../Redux/Actions/userActions";
+import {listSearch} from "../Redux/Actions/ProductActions";
 
 const Header = () => {
   const [keyword, setKeyword] = useState();
@@ -10,9 +10,9 @@ const Header = () => {
   let history = useHistory();
 
   const cart = useSelector((state) => state.cart);
-  const { cartItems } = cart;
+  const {cartItems} = cart;
   const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  const {userInfo} = userLogin;
   const [listStore, setListStore] = useState(JSON.parse(localStorage.getItem('favorite')) || []);
   const logoutHandler = () => {
     dispatch(logout());
@@ -22,8 +22,31 @@ const Header = () => {
   //   listStore = JSON.parse(localStorage.getItem('favorite'))|| 0;
   // },[JSON.parse(JSON.stringify(listStore))])
 
+
+  useEffect(()=>{
+   const search = setTimeout(()=>{
+     if (keyword === undefined) return;
+
+     keyword.trim();
+
+     //check rong
+     if(!keyword) {
+       history.push('/');
+     }else {
+       dispatch(listSearch(keyword));
+       history.push(`/search/${keyword}`);
+     }
+
+    },500);
+    return () => clearTimeout(search);
+  },[keyword]);
+
   const submitHandler = (e) => {
     e.preventDefault();
+    //Neu keyword khong duoc nhap
+    if (!keyword) return;
+
+    //Neu keyword duoc nhap
     keyword.trim();
     dispatch(listSearch(keyword));
     history.push(`/search/${keyword}`);
@@ -67,7 +90,7 @@ const Header = () => {
               <div className="row ">
                 <div className="col-6 d-flex align-items-center">
                   <Link className="navbar-brand" to="/">
-                    <img alt="logo" src="/imgaes/logo-mb.png" />
+                    <img alt="logo" src="/imgaes/logo-mb.png"/>
                   </Link>
                 </div>
                 <div className="col-6 d-flex align-items-center justify-content-end Login-Register">
@@ -80,7 +103,7 @@ const Header = () => {
                         aria-haspopup="true"
                         aria-expanded="false"
                       >
-                        <i class="fas fa-user"></i>
+                        <i className="fas fa-user"></i>
                       </button>
                       <div className="dropdown-menu">
                         <Link className="dropdown-item" to="/profile">
@@ -105,7 +128,7 @@ const Header = () => {
                         aria-haspopup="true"
                         aria-expanded="false"
                       >
-                        <i class="fas fa-user"></i>
+                        <i className="fas fa-user"></i>
                       </button>
                       <div className="dropdown-menu">
                         <Link className="dropdown-item" to="/login">
@@ -125,7 +148,7 @@ const Header = () => {
                   </Link>
                 </div>
                 <div className="col-12 d-flex align-items-center">
-                  <form onSubmit={submitHandler} className="input-group">
+                  <form onSubmit={submitHandler}  className="input-group">
                     <input
                       type="search"
                       className="form-control rounded search"
@@ -146,7 +169,7 @@ const Header = () => {
             <div className="row">
               <div className="col-md-3 col-4 d-flex align-items-center mb-4">
                 <Link className="navbar-brand" to="/">
-                  <img alt="logo" src="/images/Kieungann.png" />
+                  <img alt="logo" src="/images/Kieungann.png"/>
                 </Link>
               </div>
 
@@ -158,8 +181,8 @@ const Header = () => {
                     placeholder="Search products....."
                     onChange={(e) => setKeyword(e.target.value)}
                   />
-                  <button type="submit" class="btn btn-success">
-                    <i class="fas fa-search"></i>
+                  <button type="submit" className="btn btn-success">
+                    <i className="fas fa-search"></i>
                   </button>
                 </form>
               </div>
@@ -201,7 +224,7 @@ const Header = () => {
                   <span className="badge">{cartItems.length}</span>
                 </Link>
                 <Link to="/favorite">
-                <i className="fas fa-heart"></i>
+                  <i className="fas fa-heart"></i>
                   <span className="badge">{listStore.length ? listStore.length : 0}</span>
                 </Link>
               </div>

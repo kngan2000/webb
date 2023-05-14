@@ -6,6 +6,7 @@ import { ORDER_CREATE_RESET } from "../Redux/Constants/OrderConstants";
 import Header from "./../components/Header";
 import Message from "./../components/LoadingError/Error";
 import {PaymentMethod} from "./PaymentScreen";
+import {toast} from "react-toastify";
 
 const PlaceOrderScreen = ({ history }) => {
   window.scrollTo(0, 0);
@@ -50,6 +51,7 @@ const PlaceOrderScreen = ({ history }) => {
 
   useEffect(() => {
     if (success) {
+      toast.success(`You have successfully ordered with ${pay}`)
       history.push(`/order/${order._id}`);
       dispatch({ type: ORDER_CREATE_RESET });
     }
@@ -62,8 +64,9 @@ const PlaceOrderScreen = ({ history }) => {
       dispatch(
         createOrder({
           orderItems: cart.cartItems,
+          user:userInfo,
           shippingAddress: cart.shippingAddress,
-          paymentMethod: pay === PaymentMethod.Credit ? "Credit" : "Paypal",
+          paymentMethod: pay,
           itemsPrice: cart.itemsLoanPrice,
           shippingPrice: cart.shippingLoanPrice,
           taxPrice: cart.taxLoanPrice,
@@ -75,9 +78,10 @@ const PlaceOrderScreen = ({ history }) => {
     } else {
       dispatch(
         createOrder({
+          user:userInfo,
           orderItems: cart.cartItems,
           shippingAddress: cart.shippingAddress,
-          paymentMethod: pay === PaymentMethod.Credit ? "Credit" : "Paypal",
+          paymentMethod: pay,
           itemsPrice: cart.itemsPrice,
           shippingPrice: cart.shippingPrice,
           taxPrice: cart.taxPrice,
@@ -118,7 +122,7 @@ const PlaceOrderScreen = ({ history }) => {
             <div className="row ">
               <div className="col-md-4 center">
                 <div className="alert-success order-box">
-                  <i class="fas fa-user"></i>
+                  <i className="fas fa-user"></i>
                 </div>
               </div>
               <div className="col-md-8 center">

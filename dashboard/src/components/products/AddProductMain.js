@@ -1,15 +1,15 @@
-import React, { useEffect, useState, useRef } from "react";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import { PRODUCT_CREATE_RESET } from "../../Redux/Constants/ProductConstants";
-import { createProduct } from "./../../Redux/Actions/ProductActions";
+import React, {useEffect, useState, useRef} from "react";
+import {Link} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {toast} from "react-toastify";
+import {PRODUCT_CREATE_RESET} from "../../Redux/Constants/ProductConstants";
+import {createProduct} from "./../../Redux/Actions/ProductActions";
 import Toast from "../LoadingError/Toast";
 import Message from "../LoadingError/Error";
 import Loading from "../LoadingError/Loading";
 import axios from "axios";
 import CropEasy from "../crop/CropEasy";
-import { imageShow, imageUpload } from "../../ulities/imageUpload";
+import {imageShow, imageUpload} from "../../ulities/imageUpload";
 
 const ToastObjects = {
   pauseOnFocusLoss: false,
@@ -37,7 +37,7 @@ const AddProductMain = () => {
   const dispatch = useDispatch();
 
   const productCreate = useSelector((state) => state.productCreate);
-  const { loading, error, product } = productCreate;
+  const {loading, error, product} = productCreate;
 
   useEffect(() => {
     return new Promise(async () => {
@@ -51,7 +51,7 @@ const AddProductMain = () => {
   useEffect(() => {
     if (product) {
       toast.success("Product Added", ToastObjects);
-      dispatch({ type: PRODUCT_CREATE_RESET });
+      dispatch({type: PRODUCT_CREATE_RESET});
       setName("");
       setDescription("");
       setCountInStock(0);
@@ -106,15 +106,27 @@ const AddProductMain = () => {
 
   return (
     <>
-      <Toast />
-      <section className="content-main" style={{ maxWidth: "1200px" }}>
+      <Toast/>
+      <div style={
+        {
+          marginLeft: "auto",
+          marginRight: "auto",
+          marginTop:"40px",
+          width:"50%",
+          textAlign:"center"
+        }
+      }>
+        <h2 >ADD NEW PRODUCT</h2>
+      </div>
+
+      <section className="content-main" style={{maxWidth: "1200px"}}>
         <form onSubmit={submitHandler}>
-          <div className="row mb-4" style={{margin:"0 80px"}}>
+          <div className="row mb-4" style={{margin: "0 80px"}}>
             <div className="col-xl-12 col-lg-12">
               <div className="card mb-4 shadow-sm">
                 <div className="card-body">
                   {error && <Message variant="alert-danger">{error}</Message>}
-                  {loading && <Loading />}
+                  {loading && <Loading/>}
                   <div className="mb-4">
                     <label htmlFor="product_title" className="form-label">
                       Product ID
@@ -145,7 +157,7 @@ const AddProductMain = () => {
                   </div>
                   <div className="mb-4">
                     <label htmlFor="product_price" className="form-label">
-                     Purchase Price
+                      Purchase Price
                     </label>
                     <input
                       type="number"
@@ -223,18 +235,18 @@ const AddProductMain = () => {
           </div>
           <div className="content-header">
             <Link to="/products" className="btn btn-danger text-white">
-            Go to product list
+              Go to product list
             </Link>
             <div>
               <button type="submit" className="btn btn-primary">
-               Add new Product
+                Add new Product
               </button>
             </div>
           </div>
         </form>
         {openCrop && (
           <CropEasy
-            {...{ photoURL, setOpenCrop, setPhotoURL, setFile, setCheckCrop }}
+            {...{photoURL, setOpenCrop, setPhotoURL, setFile, setCheckCrop}}
           />
         )}
       </section>

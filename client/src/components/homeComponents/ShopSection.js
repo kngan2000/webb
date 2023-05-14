@@ -99,7 +99,11 @@ const ShopSection = (props) => {
                       </div>
                     ))}
                   </>
-                ) : (
+                ) :
+                  products.length === 0? (
+                    <Message variant="alert-danger">No Products found</Message>
+                  ):
+                  (
                   <>
                     {products.map((product) => (
                       <div

@@ -20,16 +20,18 @@ orderRouter.post(
       shippingPrice,
       totalPrice,
       typePay,
+      user,
     } = req.body;
+
+    console.log(user);
 
     if (orderItems && orderItems.length === 0) {
       res.status(400);
       throw new Error("No order items!");
-      return;
     } else {
       const order = new Order({
         orderItems,
-        user: req.user._id,
+        user: user._id,
         shippingAddress,
         paymentMethod,
         itemsPrice,
@@ -40,6 +42,7 @@ orderRouter.post(
       });
 
       const createOrder = await order.save();
+      await createOrder.populate();
       res.status(201).json(createOrder);
     }
   })

@@ -129,7 +129,7 @@ const OrderScreen = ({ match }) => {
                       <strong>Information Order</strong>
                     </h5>
                     <p>Shipping: {order.shippingAddress.country}</p>
-                    <p>Trạng thái thanh toán: {order.paymentMethod}</p>
+                    <p>Trạng thái thanh toán: {order.paymentMethod == PaymentMethod.Credit? "Payment on delivery": "PayPal"}</p>
                     {order.isPaid ? (
                       <div className="bg-info p-2 col-12">
                         <p className="text-white text-center text-sm-start">
@@ -257,7 +257,7 @@ const OrderScreen = ({ match }) => {
                     </tr>
                   </tbody>
                 </table>
-                {!order.isPaid && order.paymentMethod === "Paypal" && (
+                {!order.isPaid && order.paymentMethod === PaymentMethod.PayPal && (
                   <div className="col-12">
                     {loadingPay && <Loading />}
                     {!sdkReady ? (

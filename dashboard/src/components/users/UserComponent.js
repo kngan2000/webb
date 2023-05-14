@@ -73,7 +73,7 @@ const UserComponent = () => {
                     <div className="card-header">
                       <img
                         className="img-md img-avatar"
-                        src="/images/favicon.png"
+                        src={user.avatar || "/images/favicon.png"}
                         alt="User pic"
                       />
                     </div>
@@ -89,7 +89,7 @@ const UserComponent = () => {
                           <a href={`mailto:${user.email}`}>{user.email}</a>
                         </p>
 
-                        <div className="row">
+                        <div className="row ">
                           {/* <Link
                             to={`/users/${user._id}/edit`}
                             className="btn btn-sm btn-outline-success p-2 pb-3 col-md-6"
@@ -99,7 +99,11 @@ const UserComponent = () => {
                           <Link
                             to="#"
                             onClick={() => deletehandler(user._id)}
-                            className="btn btn-sm btn-outline-danger p-2 pb-3 col-md-6"
+                            className="btn btn-sm btn-outline-danger p-2 pb-3 col-md-6 "
+                            style={{
+                              marginLeft:"auto",
+                              marginRight:"auto",
+                            }}
                           >
                             <i className="fas fa-trash-alt"></i>
                           </Link>
