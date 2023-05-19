@@ -101,7 +101,7 @@ const ShopSection = (props) => {
                   </>
                 ) :
                   products.length === 0? (
-                    <Message variant="alert-danger">No Products found</Message>
+                    <Message variant="alert-danger">No Products found!</Message>
                   ):
                   (
                   <>
