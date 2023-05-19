@@ -112,7 +112,7 @@ const OrderDetailProducts = (props) => {
                     <span className="badge rounded-pill alert alert-success text-success">
                       {order.paymentMethod === "Credit"
                         ? "Payment on Delivery"
-                        : "Payment success"}
+                        : "Payment Success"}
                     </span>
                   ) : (
                     <span className="badge rounded-pill alert alert-danger text-danger">

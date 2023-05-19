@@ -129,7 +129,7 @@ const OrderScreen = ({ match }) => {
                       <strong>Information Order</strong>
                     </h5>
                     <p>Shipping: {order.shippingAddress.country}</p>
-                    <p>Trạng thái thanh toán: {order.paymentMethod == PaymentMethod.Credit? "Payment on delivery": "PayPal"}</p>
+                    <p>Payment status: {order.paymentMethod == PaymentMethod.Credit? "Payment on delivery": "PayPal"}</p>
                     {order.isPaid ? (
                       <div className="bg-info p-2 col-12">
                         <p className="text-white text-center text-sm-start">
@@ -139,7 +139,7 @@ const OrderScreen = ({ match }) => {
                     ) : (
                       <div className="bg-danger p-2 col-12">
                         <p className="text-white text-center text-sm-start">
-                          Have not paid
+                          Not paid
                         </p>
                       </div>
                     )}
