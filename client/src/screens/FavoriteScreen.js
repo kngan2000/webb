@@ -98,8 +98,11 @@ const FavoriteScreen = ({ match, location, history }) => {
               )}
             </div> */}
             <div className="cart-buttons d-flex align-items-center row">
-              <div className="col-md-4"></div>
-              <div className="col-md-4 d-flex justify-content-md-end mt-3 mt-md-0">
+                <Link to="/" className="col-md-6 ">
+                  <button class="">Continue To Shopping</button>
+                </Link>
+
+              <div className="col-md-6 d-flex justify-content-md-end mt-3 mt-md-0">
                 <button onClick={checkOutHandler}>Order Now</button>
               </div>
             </div>
